@@ -1,0 +1,2 @@
+
+LAPS_TOPIC = 'LapTime'

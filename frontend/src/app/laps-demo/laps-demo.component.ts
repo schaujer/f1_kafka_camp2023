@@ -2,6 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {NgxEchartsDirective} from "ngx-echarts";
 import {EChartsOption} from "echarts";
+import {LapseStreamService} from "../misc/f1-stream.service";
+import {LapseUpdate} from "../types/lapse-update.type";
 
 @Component({
   selector: 'app-laps-demo',
@@ -20,7 +22,7 @@ export class LapsDemoComponent implements OnInit, OnDestroy {
   private data: DataT[] = [];
   private timer: any;
 
-  constructor() {}
+  constructor(private lapseService: LapseStreamService) {}
 
   ngOnInit(): void {
 

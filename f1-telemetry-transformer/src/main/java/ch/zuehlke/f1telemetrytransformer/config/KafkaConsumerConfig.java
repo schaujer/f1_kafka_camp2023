@@ -20,9 +20,11 @@ import java.util.Map;
 @EnableKafka
 @Configuration
 public class KafkaConsumerConfig {
-    @Value("${spring.cloud.stream.kafka.binder.brokers}")
-    private String bootstrapServer;
+    private final String bootstrapServer;
 
+    public KafkaConsumerConfig(@Value("${spring.cloud.stream.kafka.binder.brokers}") String bootstrapServer) {
+        this.bootstrapServer = bootstrapServer;
+    }
 
     @Bean
     public Map<String, Object> consumerConfigs() {

@@ -1,16 +1,23 @@
 package ch.zuehlke.f1telemetrytransformer.model;
 
 public class TemperatureMessage {
-    private long temperature;
+    private double temperature;
 
     public TemperatureMessage() {
     }
 
-    public long getTemperature() {
+    public double getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(long temperature) {
+    public void setTemperature(double temperature) {
         this.temperature = temperature;
+    }
+
+    @Override
+    public String toString() {
+        return "TemperatureMessage{" +
+                "temperature=" + temperature +
+                '}';
     }
 }

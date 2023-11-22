@@ -1,6 +1,6 @@
 package ch.zuehlke.f1telemetrytransformer.kafka.processor;
 
-import ch.zuehlke.f1telemetrytransformer.kafka.model.JsonSerde;
+import ch.zuehlke.f1telemetrytransformer.kafka.JsonSerde;
 import ch.zuehlke.f1telemetrytransformer.kafka.model.LapUpdateMessage;
 import ch.zuehlke.f1telemetrytransformer.kafka.model.SectorUpdateMessage;
 import ch.zuehlke.f1telemetrytransformer.service.LapTimeService;

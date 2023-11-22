@@ -1,4 +1,4 @@
-package ch.zuehlke.f1telemetrytransformer.kafka.model;
+package ch.zuehlke.f1telemetrytransformer.kafka;
 
 import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

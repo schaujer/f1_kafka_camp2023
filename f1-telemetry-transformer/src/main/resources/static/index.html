@@ -74,7 +74,7 @@
             window.myLine = new Chart(ctx, config);
 
             /* Configuring WebSocket on Client Side */
-            var socket = new SockJS('/live-temperature');
+            var socket = new SockJS('/websocket');
             stompClient = Stomp.over(socket);
             stompClient.connect({}, function(frame) {
                 stompClient.subscribe('/topic/temperature', function(temperature) {
@@ -87,7 +87,13 @@
                     });
                     window.myLine.update();
                 });
+
+                stompClient.subscribe('/topic/laptimes', function(laptimeObject) {
+                    console.log(laptimeObject)
+                });
             });
+
+
 
         });
     </script>

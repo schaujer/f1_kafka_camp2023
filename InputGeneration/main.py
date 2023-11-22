@@ -32,7 +32,8 @@ def start_simulation():
         sectors = setup_sector_updates(global_start_time, session)
         producer.add_data_source_to_producer(SECTOR_TOPIC, SECTOR_TOPIC, sectors)
 
-        for driver in session.drivers:
+
+        for driver in session.laps['Driver'].unique():
             telemetry = setup_telemetry_by_driver(global_start_time, session, driver)
             producer.add_data_source_to_producer(TELEMETRY_TOPIC, TELEMETRY_TOPIC, telemetry)
 

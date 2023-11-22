@@ -6,10 +6,15 @@ import ch.zuehlke.f1telemetrytransformer.service.model.LapTimeUpdate;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class LapTimeService {
     private final HashMap<String, LapTimeUpdate> lapTimeCache = new HashMap<>();
+
+    public List<LapTimeUpdate> getCurrentLapTimeUpdates() {
+        return lapTimeCache.values().stream().toList();
+    }
 
     public LapTimeUpdate handleLapTimeMessageEvent(LapUpdateMessage lapUpdateMessage) {
         LapTimeUpdate lapTimeUpdate = getLapTimeEntryForDriver(lapUpdateMessage.getDriver());

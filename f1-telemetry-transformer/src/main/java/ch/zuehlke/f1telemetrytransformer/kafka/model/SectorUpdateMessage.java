@@ -1,4 +1,4 @@
-package ch.zuehlke.f1telemetrytransformer.model;
+package ch.zuehlke.f1telemetrytransformer.kafka.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -10,21 +10,19 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class LapTimeMessage {
+public class SectorUpdateMessage {
     @JsonProperty("DataType")
     private String dataType;
     @JsonProperty("LapNumber")
     private int lapNumber;
-    @JsonProperty("LapStartTime")
-    private double lapStartTime;
-    @JsonProperty("LapDuration")
-    private double lapDuration;
-    @JsonProperty("Time")
-    private double time;
     @JsonProperty("Driver")
     private String driver;
-    @JsonProperty("Position")
-    private int position;
+    @JsonProperty("Sector1Time")
+    private double sector1Time;
+    @JsonProperty("Sector2Time")
+    private double sector2Time;
+    @JsonProperty("Sector3Time")
+    private double sector3Time;
     @JsonProperty("Timestamp")
     private double timestamp;
 }

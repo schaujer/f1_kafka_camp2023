@@ -30,7 +30,7 @@ import static org.apache.kafka.streams.StreamsConfig.APPLICATION_ID_CONFIG;
 public class KafkaConsumerConfig {
     private final String bootstrapServer;
 
-    public KafkaConsumerConfig(@Value("${spring.cloud.stream.kafka.binder.brokers}") String bootstrapServer) {
+    public KafkaConsumerConfig(@Value("${kafka.broker}") String bootstrapServer) {
         this.bootstrapServer = bootstrapServer;
     }
 
@@ -58,7 +58,7 @@ public class KafkaConsumerConfig {
         Map<String, Object> props = new HashMap<>();
         props.put(APPLICATION_ID_CONFIG, "streams-app");
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
-        props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
+        props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.StringSerde.class);
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, JsonSerde.class);
 
         return new KafkaStreamsConfiguration(props);

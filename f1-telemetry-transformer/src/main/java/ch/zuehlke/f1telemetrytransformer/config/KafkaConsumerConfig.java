@@ -1,6 +1,6 @@
 package ch.zuehlke.f1telemetrytransformer.config;
 
-import ch.zuehlke.f1telemetrytransformer.kafka.model.SectorUpdateMessage;
+import ch.zuehlke.f1telemetrytransformer.kafka.model.TelemetryUpdateMessage;
 import ch.zuehlke.f1telemetrytransformer.service.model.LapTimeUpdate;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
@@ -39,13 +39,6 @@ public class KafkaConsumerConfig {
         return new ConcurrentKafkaListenerContainerFactory<>();
     }
 
-    //@Bean
-    //public ConcurrentKafkaListenerContainerFactory<String, LapTimeMessage> lapTimeListenerContainerFactory() {
-    //    ConcurrentKafkaListenerContainerFactory<String, LapTimeMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
-    //    factory.setConsumerFactory(consumerFactory(LapTimeMessage.class));
-    //    return factory;
-    //}
-
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, LapTimeUpdate> lapTimeUpdateListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, LapTimeUpdate> factory = new ConcurrentKafkaListenerContainerFactory<>();
@@ -54,9 +47,9 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, SectorUpdateMessage> sectorUpdateListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, SectorUpdateMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory(SectorUpdateMessage.class));
+    public ConcurrentKafkaListenerContainerFactory<String, TelemetryUpdateMessage> telemetryUpdateListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, TelemetryUpdateMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerFactory(TelemetryUpdateMessage.class));
         return factory;
     }
 

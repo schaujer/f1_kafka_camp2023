@@ -12,10 +12,10 @@ public class LapTimeService {
     private final HashMap<String, LapTimeUpdate> lapTimeCache = new HashMap<>();
 
     public LapTimeUpdate handleLapTimeMessageEvent(LapUpdateMessage lapUpdateMessage) {
-        LapTimeUpdate lapTimeUpdate = new LapTimeUpdate();
-        lapTimeUpdate.setLapNumber(lapUpdateMessage.getLapNumber());
+        LapTimeUpdate lapTimeUpdate = getLapTimeEntryForDriver(lapUpdateMessage.getDriver());
+
+        lapTimeUpdate.setLapNumber(lapUpdateMessage.getLapNumber() + 1);
         lapTimeUpdate.setLapTime(lapUpdateMessage.getLapTime());
-        lapTimeUpdate.setDriver(lapUpdateMessage.getDriver());
         lapTimeUpdate.setPosition(lapUpdateMessage.getPosition());
         lapTimeUpdate.setTimestamp(lapUpdateMessage.getTimestamp());
 
@@ -24,20 +24,28 @@ public class LapTimeService {
     }
 
     public LapTimeUpdate handleSectorUpdateMessageEvent(SectorUpdateMessage sectorUpdateMessage) {
-        LapTimeUpdate lapTimeUpdate;
-        if (lapTimeCache.containsKey(sectorUpdateMessage.getDriver())) {
-            lapTimeUpdate = lapTimeCache.get(sectorUpdateMessage.getDriver());
-        } else {
-            lapTimeUpdate = new LapTimeUpdate();
-            lapTimeUpdate.setDriver(sectorUpdateMessage.getDriver());
-        }
+        LapTimeUpdate lapTimeUpdate = getLapTimeEntryForDriver(sectorUpdateMessage.getDriver());
 
         lapTimeUpdate.setLapNumber(sectorUpdateMessage.getLapNumber());
         lapTimeUpdate.setSector1Time(sectorUpdateMessage.getSector1Time());
         lapTimeUpdate.setSector2Time(sectorUpdateMessage.getSector2Time());
         lapTimeUpdate.setSector3Time(sectorUpdateMessage.getSector3Time());
         lapTimeUpdate.setTimestamp(sectorUpdateMessage.getTimestamp());
+
         lapTimeCache.put(sectorUpdateMessage.getDriver(), lapTimeUpdate);
+        return lapTimeUpdate;
+    }
+
+    private LapTimeUpdate getLapTimeEntryForDriver(String driver) {
+        LapTimeUpdate lapTimeUpdate;
+
+        if (lapTimeCache.containsKey(driver)) {
+            lapTimeUpdate = lapTimeCache.get(driver);
+        } else {
+            lapTimeUpdate = new LapTimeUpdate();
+            lapTimeUpdate.setDriver(driver);
+        }
+
         return lapTimeUpdate;
     }
 }

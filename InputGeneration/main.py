@@ -7,6 +7,9 @@ from InputGeneration.constants import LAPS_TOPIC, SECTOR_TOPIC
 from InputGeneration.laps import setup_laps_update, setup_sector_updates
 from InputGeneration.my_kafka_producer import MyKafkaProducer
 
+from constants import TELEMETRY_TOPIC
+from telemetry import setup_telemetry_by_driver
+
 
 def setup_logging():
     format = "%(asctime)s:.%(msecs)03d [%(name)-23s] [%(levelname)-8s]: %(message)s"
@@ -28,6 +31,11 @@ def start_simulation():
 
         sectors = setup_sector_updates(global_start_time, session)
         producer.add_data_source_to_producer(SECTOR_TOPIC, SECTOR_TOPIC, sectors)
+
+        for driver in session.drivers:
+            telemetry = setup_telemetry_by_driver(global_start_time, session, driver)
+            producer.add_data_source_to_producer(TELEMETRY_TOPIC, TELEMETRY_TOPIC, telemetry)
+
 
         producer.wait_for_finish()
     finally:

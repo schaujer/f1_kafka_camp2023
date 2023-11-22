@@ -41,4 +41,3 @@ def setup_sector_updates(global_start_time: float, session: Session):
     df = df.sort_values('Timestamp')
     df = df.to_dict('records')
     return df
-

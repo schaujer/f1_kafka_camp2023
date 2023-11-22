@@ -18,13 +18,13 @@ public class KafkaConsumerService {
 
     @KafkaListener(topics = "${kafka.topics.output.laptimeupdate}", containerFactory = "lapTimeUpdateListenerContainerFactory")
     public void consumeLapTimeMessage(@Payload LapTimeUpdate message) {
-        LOGGER.info("Consuming LapTimeUpdate Topic: " + message);
+        LOGGER.debug("Consuming LapTimeUpdate Topic: " + message);
         websocketService.sendLaptimeUpdate(message);
     }
 
     @KafkaListener(topics = "${kafka.topics.input.telemetryupdate}", containerFactory = "telemetryUpdateListenerContainerFactory")
     public void consumeTelemetryMessage(@Payload TelemetryUpdateMessage message) {
-        LOGGER.info("Consuming TelemetryUpdate Topic: " + message);
+        LOGGER.debug("Consuming TelemetryUpdate Topic: " + message);
         websocketService.sendTelemetryUpdate(message);
     }
 }

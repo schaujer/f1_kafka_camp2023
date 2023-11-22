@@ -37,7 +37,7 @@ public class LaptimeUpdateProcessor {
     @Autowired
     void buildLapUpdatePipeline(StreamsBuilder streamsBuilder) {
         streamsBuilder.stream(lapUpdateTopic, Consumed.with(STRING_SERDE, LAPUPDATE_SERDE))
-                .peek((k, v) -> LOGGER.info("Processing LapUpdate Topic: " + v))
+                .peek((k, v) -> LOGGER.debug("Processing LapUpdate Topic: " + v))
                 .mapValues(lapTimeService::handleLapTimeMessageEvent)
                 .to(lapTimeUpdateTopic);
     }
@@ -45,7 +45,7 @@ public class LaptimeUpdateProcessor {
     @Autowired
     void buildSectorUpdatePipeline(StreamsBuilder streamsBuilder) {
         streamsBuilder.stream(sectorTimeTopic, Consumed.with(STRING_SERDE, SECTORUPDATE_SERDE))
-                .peek((k, v) -> LOGGER.info("Processing SectorUpdate Topic: " + v))
+                .peek((k, v) -> LOGGER.debug("Processing SectorUpdate Topic: " + v))
                 .mapValues(lapTimeService::handleSectorUpdateMessageEvent)
                 .to(lapTimeUpdateTopic);
     }

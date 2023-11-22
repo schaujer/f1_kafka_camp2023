@@ -3,8 +3,8 @@ import logging
 
 import fastf1
 
-from InputGeneration.constants import LAPS_TOPIC
-from InputGeneration.laps import setup_laps
+from InputGeneration.constants import LAPS_TOPIC, SECTOR_TOPIC
+from InputGeneration.laps import setup_laps_update, setup_sector_updates
 from InputGeneration.my_kafka_producer import MyKafkaProducer
 
 
@@ -20,11 +20,18 @@ def start_simulation():
     session.load()
 
     start_time = session.session_start_time.total_seconds()
-    producer = MyKafkaProducer(start_delay=start_time,  warp=60 * 20)
+    producer = MyKafkaProducer(start_delay=start_time,  warp=60*20)
 
-    laps = setup_laps(global_start_time, session)
-    producer.add_data_source_to_producer(LAPS_TOPIC, LAPS_TOPIC, laps)
-    producer.wait_for_finish()
+    try:
+        laps = setup_laps_update(global_start_time, session)
+        producer.add_data_source_to_producer(LAPS_TOPIC, LAPS_TOPIC, laps)
+
+        sectors = setup_sector_updates(global_start_time, session)
+        producer.add_data_source_to_producer(SECTOR_TOPIC, SECTOR_TOPIC, sectors)
+
+        producer.wait_for_finish()
+    finally:
+        producer.stop_signal.set()
 
 
 def main():

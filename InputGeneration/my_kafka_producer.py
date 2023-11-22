@@ -23,6 +23,7 @@ class MyKafkaProducer:
         self.start_delay = start_delay
         self.warp = warp
         self.threads = []
+        self.stop_signal = threading.Event()
 
     def wait_for_finish(self):
         for thread in self.threads:
@@ -42,6 +43,9 @@ class MyKafkaProducer:
             time_to_sleep = max(0, timestamp - self._current_sim_time())
             time.sleep(time_to_sleep)
             self._produce_dict(topic, el)
+            if self.stop_signal.is_set():
+                logger.info(f'stop signal set, stop producing topic {topic}')
+                return
 
     def _produce_dict(self, topic, data):
         logger.info(f'Produce {data["DataType"]} into topic {topic}')

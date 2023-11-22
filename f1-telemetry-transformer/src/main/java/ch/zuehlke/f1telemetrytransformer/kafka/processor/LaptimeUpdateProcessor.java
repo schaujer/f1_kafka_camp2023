@@ -1,6 +1,7 @@
 package ch.zuehlke.f1telemetrytransformer.kafka.processor;
 
-import ch.zuehlke.f1telemetrytransformer.kafka.model.LapTimeMessage;
+import ch.zuehlke.f1telemetrytransformer.kafka.model.LapUpdateMessage;
+import ch.zuehlke.f1telemetrytransformer.kafka.model.SectorUpdateMessage;
 import ch.zuehlke.f1telemetrytransformer.service.LapTimeService;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
@@ -15,10 +16,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class LaptimeUpdateProcessor {
     private final Serde<String> STRING_SERDE = Serdes.String();
-    private final Serde<LapTimeMessage> LAPTIME_SERDE = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(LapTimeMessage.class));
+    private final Serde<LapUpdateMessage> LAPUPDATE_SERDE = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(LapUpdateMessage.class));
+    private final Serde<SectorUpdateMessage> SECTORUPDATE_SERDE = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(SectorUpdateMessage.class));
 
-    @Value("${kafka.topics.input.laptime}")
-    private String lapTimeTopic;
+    @Value("${kafka.topics.input.lapupdate}")
+    private String lapUpdateTopic;
+    @Value("${kafka.topics.input.sectorupdate}")
+    private String sectorTimeTopic;
+
     @Value("${kafka.topics.output.laptimeupdate}")
     private String lapTimeUpdateTopic;
     private final LapTimeService lapTimeService;
@@ -28,10 +33,18 @@ public class LaptimeUpdateProcessor {
     }
 
     @Autowired
-    void buildPipeline(StreamsBuilder streamsBuilder) {
-        streamsBuilder.stream(lapTimeTopic, Consumed.with(STRING_SERDE, LAPTIME_SERDE))
-                .peek((k, v) -> System.out.println("Processing lapTimeTopic: " + v))
+    void buildLapUpdatePipeline(StreamsBuilder streamsBuilder) {
+        streamsBuilder.stream(lapUpdateTopic, Consumed.with(STRING_SERDE, LAPUPDATE_SERDE))
+                .peek((k, v) -> System.out.println("Processing LapUpdate Topic: " + v))
                 .mapValues(lapTimeService::handleLapTimeMessageEvent)
+                .to(lapTimeUpdateTopic);
+    }
+
+    @Autowired
+    void buildSectorUpdatePipeline(StreamsBuilder streamsBuilder) {
+        streamsBuilder.stream(sectorTimeTopic, Consumed.with(STRING_SERDE, SECTORUPDATE_SERDE))
+                .peek((k, v) -> System.out.println("Processing SectorUpdate Topic: " + v))
+                .mapValues(lapTimeService::handleSectorUpdateMessageEvent)
                 .to(lapTimeUpdateTopic);
     }
 }

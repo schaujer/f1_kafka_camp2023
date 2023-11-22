@@ -31,9 +31,9 @@ def setup_sector_updates(global_start_time: float, session: Session):
     sector1 = mylaps[['DataType', 'Driver', 'LapNumber', 'Sector1Time', 'Sector2Time', 'Sector3Time']]
     sector2 = mylaps[['DataType', 'Driver', 'LapNumber', 'Sector1Time', 'Sector2Time', 'Sector3Time']]
     sector3 = mylaps[['DataType', 'Driver', 'LapNumber', 'Sector1Time', 'Sector2Time', 'Sector3Time']]
-    sector1['Sector2Time'] = np.NAN
-    sector1['Sector3Time'] = np.NAN
-    sector2['Sector3Time'] = np.NAN
+    sector1['Sector2Time'] = None
+    sector1['Sector3Time'] = None
+    sector2['Sector3Time'] = None
     sector1['Timestamp'] = mylaps['Sector1SessionTime'].dt.total_seconds() + global_start_time
     sector2['Timestamp'] = mylaps['Sector2SessionTime'].dt.total_seconds() + global_start_time
     sector3['Timestamp'] = mylaps['Sector3SessionTime'].dt.total_seconds() + global_start_time

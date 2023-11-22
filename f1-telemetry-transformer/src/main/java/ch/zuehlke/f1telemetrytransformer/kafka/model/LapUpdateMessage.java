@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class LapTimeMessage {
+public class LapUpdateMessage {
     @JsonProperty("DataType")
     private String dataType;
     @JsonProperty("LapNumber")

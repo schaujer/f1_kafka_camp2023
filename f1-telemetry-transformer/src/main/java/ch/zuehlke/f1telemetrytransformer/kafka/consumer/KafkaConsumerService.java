@@ -14,7 +14,7 @@ public class KafkaConsumerService {
 
     @KafkaListener(topics = "${kafka.topics.output.laptimeupdate}", containerFactory = "lapTimeUpdateListenerContainerFactory")
     public void consumeLapTimeMessage(@Payload LapTimeUpdate message) {
-        System.out.println("Consuming laptimeupdate:" + message);
+        System.out.println("Consuming LapTimeUpdate topic:" + message);
         websocketService.sendLaptimeUpdate(message);
     }
 

@@ -1,7 +1,6 @@
 package ch.zuehlke.f1telemetrytransformer.config;
 
 import ch.zuehlke.f1telemetrytransformer.model.LapTimeMessage;
-import ch.zuehlke.f1telemetrytransformer.model.TemperatureMessage;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,13 +27,6 @@ public class KafkaConsumerConfig {
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainerFactory() {
         return new ConcurrentKafkaListenerContainerFactory<>();
-    }
-
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, TemperatureMessage> temperatureListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, TemperatureMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory(TemperatureMessage.class));
-        return factory;
     }
 
     @Bean

@@ -13,6 +13,7 @@ def setup_telemetry_by_driver(global_start_time: float, session: Session, driver
     telemetry['Driver'] = driver
     telemetry['Timestamp'] = telemetry['SessionTime'].dt.total_seconds() + global_start_time
     telemetry = telemetry[['DataType',
+                           'Driver',
                      'DriverAhead',
                      'DistanceToDriverAhead',
                      'RPM',

@@ -13,10 +13,16 @@ import lombok.ToString;
 public class TelemetryUpdateMessage {
     @JsonProperty("Driver")
     private String driver;
+    @JsonProperty("Speed")
     private float speed;
+    @JsonProperty("RPM")
     private int rpm;
+    @JsonProperty("nGear")
     private int gear;
+    @JsonProperty("Throttle")
     private float throttle;
+    @JsonProperty("Brake")
     private boolean brake;
+    @JsonProperty("DRS")
     private int drs;
 }

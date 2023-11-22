@@ -32,10 +32,18 @@ public class WebsocketService {
         TelemetryUpdate telemetryUpdate = new TelemetryUpdate();
         telemetryUpdate.setGear(update.getGear());
         telemetryUpdate.setRpm(update.getRpm());
-        telemetryUpdate.setDrs(update.getDrs());
+        telemetryUpdate.setDrs(convertToIsDrsEnabled(update.getDrs()));
         telemetryUpdate.setSpeed(update.getSpeed());
         telemetryUpdate.setBrake(update.isBrake());
         telemetryUpdate.setThrottle(update.getThrottle());
         return telemetryUpdate;
+    }
+
+    private static boolean convertToIsDrsEnabled(int drsValue) {
+        if (drsValue == 0) {
+            return false;
+        } else {
+            return (drsValue % 2) == 0;
+        }
     }
 }

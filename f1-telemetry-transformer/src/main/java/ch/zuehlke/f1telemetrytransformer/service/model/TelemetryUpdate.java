@@ -16,5 +16,5 @@ public class TelemetryUpdate {
     private int gear;
     private float throttle;
     private boolean brake;
-    private int drs;
+    private boolean drs;
 }

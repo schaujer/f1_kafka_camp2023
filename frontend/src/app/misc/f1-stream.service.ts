@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Message, Stomp} from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
+import {BehaviorSubject} from "rxjs";
+import {LapsUpdateDTO} from "../types/lapse-update.type";
 
 @Injectable({
     providedIn: 'root'
@@ -8,6 +10,7 @@ import SockJS from 'sockjs-client';
 export class LapseStreamService {
 
     private baseUrl =  'http://localhost:4200';
+    private lapsUpdates = new BehaviorSubject<LapsUpdateDTO | null>(null);
 
 
     constructor() {
@@ -15,16 +18,20 @@ export class LapseStreamService {
     }
 
     initializeWebSocketConnection() {
-        const socket = new SockJS(`${this.baseUrl}/live-temperature`);
+        const socket = new SockJS(`${this.baseUrl}/websocket`);
         const client = Stomp.over(socket);
-
+        client.debug = function (){};//do nothing
         client.connect({}, (frame: any) => {
-            console.log('Connected: ' + frame);
-            client.subscribe('/topic/temperature', (message: Message) => {
-                console.log(JSON.parse(message.body));
+            client.subscribe('/topic/laptimes', (message: Message) => {
+                const update = JSON.parse(message.body);
+                this.lapsUpdates.next(update);
             });
         }, (error: any) => {
             console.error('Error in STOMP connection: ', error);
         });
+    }
+
+    getLapsUpdates() {
+        return this.lapsUpdates.asObservable();
     }
 }

@@ -1,10 +1,10 @@
-export interface LapseUpdate {
-    DataType: string
-    LapNumber: number
-    LapStartTime: number
-    LapDuration: number
-    Time: number
-    Driver: string
-    Position: number
-    Timestamp: number
+export interface LapsUpdateDTO {
+    timestamp: number
+    driver: string
+    position: number
+    lapNumber: number
+    lapTime: number
+    sector1Time: number
+    sector2Time: number
+    sector3Time: number
 }

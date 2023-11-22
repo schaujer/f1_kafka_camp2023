@@ -1,0 +1,15 @@
+table {
+  width: 100%;
+}
+
+@keyframes flash {
+  0% { background-color: yellow; }
+  100% { background-color: transparent; }
+}
+
+.flash-effect {
+  animation: flash 1.5s;
+}
+td {
+  cursor: pointer;
+}

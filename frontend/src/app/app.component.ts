@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import {LapsDemoComponent} from "./laps-demo/laps-demo.component";
+import {OverviewTableComponent} from "./overview/overview-table/overview-table.component";
+import {HeaderComponent} from "./header/header.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, LapsDemoComponent],
+  imports: [CommonModule, RouterOutlet, OverviewTableComponent, HeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

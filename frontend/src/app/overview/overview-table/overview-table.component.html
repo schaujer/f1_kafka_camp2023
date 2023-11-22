@@ -1,0 +1,34 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element" [class.flash-effect]="isChanged(element.driver, 'position')"> {{element.position}} </td>
+    </ng-container>
+    <ng-container matColumnDef="driver">
+        <th mat-header-cell *matHeaderCellDef> Driver </th>
+        <td mat-cell *matCellDef="let element" [class.flash-effect]="isChanged(element.driver, 'driver')"> {{element.driver}} </td>
+    </ng-container>
+    <ng-container matColumnDef="lapNumber">
+        <th mat-header-cell *matHeaderCellDef> Lap </th>
+        <td mat-cell *matCellDef="let element" [class.flash-effect]="isChanged(element.driver, 'lap')"> {{element.lapNumber}} </td>
+    </ng-container>
+    <ng-container matColumnDef="sector1Time">
+        <th mat-header-cell *matHeaderCellDef> Sector 1 </th>
+        <td mat-cell *matCellDef="let element" [class.flash-effect]="isChanged(element.driver, 'sector1Time')"> {{element.sector1Time | raceTime}} </td>
+    </ng-container>
+    <ng-container matColumnDef="sector2Time">
+        <th mat-header-cell *matHeaderCellDef> Sector 2 </th>
+        <td mat-cell *matCellDef="let element" [class.flash-effect]="isChanged(element.driver, 'sector2Time')"> {{element.sector2Time | raceTime}} </td>
+    </ng-container>
+    <ng-container matColumnDef="sector3Time">
+        <th mat-header-cell *matHeaderCellDef> Sector 3 </th>
+        <td mat-cell *matCellDef="let element" [class.flash-effect]="isChanged(element.driver, 'sector3Time')"> {{element.sector3Time | raceTime}} </td>
+    </ng-container>
+    <ng-container matColumnDef="lapTime">
+        <th mat-header-cell *matHeaderCellDef> Lap Time </th>
+        <td mat-cell *matCellDef="let element" [class.flash-effect]="isChanged(element.driver, 'lapTime')"> {{element.lapTime | raceTime}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+        (click)="onRowClicked(row)"></tr>
+</table>

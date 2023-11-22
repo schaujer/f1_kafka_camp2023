@@ -12,11 +12,11 @@ import lombok.ToString;
 @ToString
 public class LapTimeUpdate {
     private int lapNumber;
-    private double lapTime;
+    private Double lapTime;
     private String driver;
     private int position;
-    private double sector1Time;
-    private double sector2Time;
-    private double sector3Time;
-    private double timestamp;
+    private Double sector1Time;
+    private Double sector2Time;
+    private Double sector3Time;
+    private Double timestamp;
 }

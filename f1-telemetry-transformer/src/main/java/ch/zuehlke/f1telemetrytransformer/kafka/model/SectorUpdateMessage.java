@@ -18,11 +18,11 @@ public class SectorUpdateMessage {
     @JsonProperty("Driver")
     private String driver;
     @JsonProperty("Sector1Time")
-    private double sector1Time;
+    private Double sector1Time;
     @JsonProperty("Sector2Time")
-    private double sector2Time;
+    private Double sector2Time;
     @JsonProperty("Sector3Time")
-    private double sector3Time;
+    private Double sector3Time;
     @JsonProperty("Timestamp")
     private double timestamp;
 }

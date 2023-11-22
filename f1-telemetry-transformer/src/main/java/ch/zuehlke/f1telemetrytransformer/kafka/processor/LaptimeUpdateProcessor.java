@@ -1,5 +1,6 @@
 package ch.zuehlke.f1telemetrytransformer.kafka.processor;
 
+import ch.zuehlke.f1telemetrytransformer.kafka.model.JsonSerde;
 import ch.zuehlke.f1telemetrytransformer.kafka.model.LapUpdateMessage;
 import ch.zuehlke.f1telemetrytransformer.kafka.model.SectorUpdateMessage;
 import ch.zuehlke.f1telemetrytransformer.service.LapTimeService;
@@ -9,15 +10,13 @@ import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.kafka.support.serializer.JsonDeserializer;
-import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.stereotype.Component;
 
 @Component
 public class LaptimeUpdateProcessor {
     private final Serde<String> STRING_SERDE = Serdes.String();
-    private final Serde<LapUpdateMessage> LAPUPDATE_SERDE = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(LapUpdateMessage.class));
-    private final Serde<SectorUpdateMessage> SECTORUPDATE_SERDE = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(SectorUpdateMessage.class));
+    private final Serde<LapUpdateMessage> LAPUPDATE_SERDE = new JsonSerde<>(LapUpdateMessage.class);
+    private final Serde<SectorUpdateMessage> SECTORUPDATE_SERDE = new JsonSerde<>(SectorUpdateMessage.class);
 
     @Value("${kafka.topics.input.lapupdate}")
     private String lapUpdateTopic;

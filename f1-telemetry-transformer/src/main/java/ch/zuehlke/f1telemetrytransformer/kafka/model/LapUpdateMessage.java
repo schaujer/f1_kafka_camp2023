@@ -22,5 +22,5 @@ public class LapUpdateMessage {
     @JsonProperty("Position")
     private int position;
     @JsonProperty("Timestamp")
-    private double timestamp;
+    private Double timestamp;
 }

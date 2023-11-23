@@ -1,14 +1,18 @@
-<p>fuck yeah, driver details page</p>
+
 <mat-grid-list cols="2" rowHeight="2:1">
+    <mat-grid-tile>
+        <app-position-chart  [currentPosition]="currentPosition" style="width: 50%"/>
+    </mat-grid-tile>
     <mat-grid-tile>
         <app-speed-gauge [speed]="currentTelemetryUpdate?.speed" style="width: 100%"/>
     </mat-grid-tile>
     <mat-grid-tile>
-        <app-speed-gauge [speed]="currentTelemetryUpdate?.throttle" style="width: 100%"/>
+        <app-time-chart [title]="'Speed over Time'" [telUpdate]="currentTelemetryUpdate" [currentValue]="currentTelemetryUpdate?.speed" style="width: 100%"/>
     </mat-grid-tile>
     <mat-grid-tile>
-        <app-speed-gauge [speed]="currentTelemetryUpdate?.rpm" style="width: 100%"/>
+        <app-time-chart [title]="'Throttle over Time'" [telUpdate]="currentTelemetryUpdate" [currentValue]="currentTelemetryUpdate?.throttle" style="width: 100%"/>
     </mat-grid-tile>
     <mat-grid-tile>
+        <app-time-chart [title]="'RPM over Time'" [telUpdate]="currentTelemetryUpdate" [currentValue]="currentTelemetryUpdate?.rpm" style="width: 100%"/>
     </mat-grid-tile>
 </mat-grid-list>

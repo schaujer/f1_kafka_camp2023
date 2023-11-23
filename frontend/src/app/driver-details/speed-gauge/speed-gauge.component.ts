@@ -1,8 +1,7 @@
-import {Component, Inject, Input, LOCALE_ID, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {CommonModule, formatDate} from '@angular/common';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import { EChartsOption } from 'echarts';
 import {NgxEchartsDirective} from "ngx-echarts";
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-speed-gauge',
@@ -13,13 +12,10 @@ import * as moment from 'moment';
 })
 export class SpeedGaugeComponent implements OnChanges, OnInit{
   @Input() speed: number | undefined
-  data: DataT[] = []
    // @ts-ignore
    options: EChartsOption;
    // @ts-ignore
    updateOptions: EChartsOpti;
-  constructor(@Inject(LOCALE_ID) private locale: string) {
-  }
 
    ngOnInit() {
      this.setupOptions()
@@ -30,25 +26,17 @@ export class SpeedGaugeComponent implements OnChanges, OnInit{
    }
 
    addSpeedData() {
-     if (this.speed === undefined) {
+     if (this.speed === null) {
        return
      }
-     const now = new Date
-     const newEl = {
-       name: now.toString(),
-       value: [
-         now,
-         this.speed,
-       ]
-     } as DataT
-     while (this.data.length > 300) {
-       this.data.shift()
-     }
-     this.data.push(newEl)
      this.updateOptions = {
        series: [
          {
-           data: this.data,
+           data:[
+               {
+                 value: this.speed
+               }
+               ]
          },
        ],
      };
@@ -56,44 +44,58 @@ export class SpeedGaugeComponent implements OnChanges, OnInit{
 
    private setupOptions() {
      this.options = {
-       title: {
-         text: 'Dynamic Data + Time Axis',
-       },
-       tooltip: {
-         trigger: 'axis',
-         formatter: params => {
-           return 'some string'
-         },
-         axisPointer: {
-           animation: false,
-         },
-       },
-       xAxis: {
-         type: 'time',
-         splitLine: {
-           show: false,
-         },
-       },
-       yAxis: {
-         type: 'value',
-         boundaryGap: [0, '100%'],
-         splitLine: {
-           show: false,
-         },
-       },
        series: [
          {
-           name: 'Mocking Data',
-           type: 'line',
-           showSymbol: false,
-           data: this.data,
-         },
-       ],
-     };
+           type: 'gauge',
+           max: 340,
+           axisLine: {
+             lineStyle: {
+               width: 30,
+               color: [
+                 [0.3, '#67e0e3'],
+                 [0.7, '#37a2da'],
+                 [1, '#fd666d']
+               ]
+             }
+           },
+           pointer: {
+             itemStyle: {
+               color: 'auto'
+             }
+           },
+           axisTick: {
+             distance: -30,
+             length: 8,
+             lineStyle: {
+               color: '#fff',
+               width: 2
+             }
+           },
+           splitLine: {
+             distance: -30,
+             length: 30,
+             lineStyle: {
+               color: '#fff',
+               width: 4
+             }
+           },
+           axisLabel: {
+             color: 'inherit',
+             distance: 40,
+             fontSize: 20
+           },
+           detail: {
+             valueAnimation: true,
+             formatter: '{value} km/h',
+             color: 'inherit'
+           },
+           data: [
+             {
+               value: 0
+             }
+           ]
+         }
+         ]
+    }
    }
 }
-
-type DataT = {
-  name: string;
-  value: [Date, number];
-};

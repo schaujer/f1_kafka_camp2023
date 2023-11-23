@@ -5,16 +5,19 @@ import {SpeedGaugeComponent} from "./speed-gauge/speed-gauge.component";
 import {LapseStreamService} from "../misc/f1-stream.service";
 import {TelemetryUpdateDTO} from "../types/telematry-update.type";
 import {MatGridListModule} from "@angular/material/grid-list";
+import {PositionChartComponent} from "./position-chart/position-chart.component";
+import {TimeChartComponent} from "./time-chart/time-chart.component";
 
 @Component({
   selector: 'app-driver-details',
   standalone: true,
-    imports: [CommonModule, SpeedGaugeComponent, MatGridListModule],
+  imports: [CommonModule, SpeedGaugeComponent, MatGridListModule, PositionChartComponent, TimeChartComponent],
   templateUrl: './driver-details.component.html',
   styleUrl: './driver-details.component.scss'
 })
 export class DriverDetailsComponent implements OnInit, OnDestroy {
   id: string | null = null;
+  currentPosition = []
   currentTelemetryUpdate: TelemetryUpdateDTO | undefined;
   // @ts-ignore
   private topicSubscription: Subscription;
@@ -40,6 +43,8 @@ export class DriverDetailsComponent implements OnInit, OnDestroy {
     this.topicSubscription = this.lapseStreamService.subscribeToTopic(`telemetry/${id}`).subscribe(data => {
       if (data) {
         this.currentTelemetryUpdate = data
+        // @ts-ignore
+        this.currentPosition = [data.x, data.y]
       }
     });
   }

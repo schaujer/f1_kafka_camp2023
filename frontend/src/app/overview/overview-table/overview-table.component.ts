@@ -6,6 +6,7 @@ import {RaceTimePipe} from "../../misc/race-time.pipe";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {LapseStreamService} from "../../misc/f1-stream.service";
+import {InitialOverviewService} from "../initial-overview.service";
 
 const drivers = ["Hamilton", "Verstappen", "Leclerc", "Ricciardo", "Alonso", "Vettel", "Bottas", "Sainz", "Perez", "Norris"];
 

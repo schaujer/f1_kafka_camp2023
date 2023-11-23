@@ -21,14 +21,13 @@ export class OverviewTableComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['position' , 'driver', 'lapNumber', 'sector1Time', 'sector2Time', 'sector3Time', 'lapTime'];
   dataSource: LapsUpdateDTO[] = [];
   changedData = new Map<string, boolean>();
-  private readonly updateInterval: any;
   // @ts-ignore
-  private lapsSubscription: Subscription;
+  private topicSubscription: Subscription;
   constructor(private router: Router, private lapseStreamService: LapseStreamService) {
   }
 
   ngOnInit() {
-    this.lapsSubscription = this.lapseStreamService.getLapsUpdates().subscribe((data: LapsUpdateDTO | null) => {
+    this.topicSubscription = this.lapseStreamService.subscribeToTopic('laptimes').subscribe(data => {
       if (data) {
         this.updateLapData(data)
       }
@@ -65,8 +64,9 @@ export class OverviewTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.updateInterval) {
-      clearInterval(this.updateInterval);
+    if (this.topicSubscription) {
+      this.topicSubscription.unsubscribe();
+      this.lapseStreamService.unsubscribeFromTopic('laptimes');
     }
   }
 

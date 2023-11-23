@@ -1,15 +1,13 @@
 package ch.zuehlke.f1telemetrytransformer.kafka.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode
 public class LapUpdateMessage {
     @JsonProperty("DataType")
     private String dataType;

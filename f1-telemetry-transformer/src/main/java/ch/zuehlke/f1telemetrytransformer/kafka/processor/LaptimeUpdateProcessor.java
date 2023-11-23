@@ -21,17 +21,21 @@ public class LaptimeUpdateProcessor {
     private final Serde<LapUpdateMessage> LAPUPDATE_SERDE = new JsonSerde<>(LapUpdateMessage.class);
     private final Serde<SectorUpdateMessage> SECTORUPDATE_SERDE = new JsonSerde<>(SectorUpdateMessage.class);
 
-    @Value("${kafka.topics.input.lapupdate}")
-    private String lapUpdateTopic;
-    @Value("${kafka.topics.input.sectorupdate}")
-    private String sectorTimeTopic;
 
-    @Value("${kafka.topics.output.laptimeupdate}")
-    private String lapTimeUpdateTopic;
+    private final String lapUpdateTopic;
+    private final String sectorUpdateTopic;
+    private final String lapTimeUpdateTopic;
     private final LapTimeService lapTimeService;
 
-    public LaptimeUpdateProcessor(LapTimeService lapTimeService) {
+    public LaptimeUpdateProcessor(
+            LapTimeService lapTimeService,
+            @Value("${kafka.topics.input.lapupdate}") String lapUpdateTopic,
+            @Value("${kafka.topics.input.sectorupdate}") String sectorUpdateTopic,
+            @Value("${kafka.topics.output.laptimeupdate}") String lapTimeUpdateTopic) {
         this.lapTimeService = lapTimeService;
+        this.lapUpdateTopic = lapUpdateTopic;
+        this.sectorUpdateTopic = sectorUpdateTopic;
+        this.lapTimeUpdateTopic = lapTimeUpdateTopic;
     }
 
     @Autowired
@@ -44,7 +48,7 @@ public class LaptimeUpdateProcessor {
 
     @Autowired
     void buildSectorUpdatePipeline(StreamsBuilder streamsBuilder) {
-        streamsBuilder.stream(sectorTimeTopic, Consumed.with(STRING_SERDE, SECTORUPDATE_SERDE))
+        streamsBuilder.stream(sectorUpdateTopic, Consumed.with(STRING_SERDE, SECTORUPDATE_SERDE))
                 .peek((k, v) -> LOGGER.debug("Processing SectorUpdate Topic: " + v))
                 .mapValues(lapTimeService::handleSectorUpdateMessageEvent)
                 .to(lapTimeUpdateTopic);

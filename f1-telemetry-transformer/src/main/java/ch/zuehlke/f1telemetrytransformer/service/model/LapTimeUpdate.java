@@ -1,15 +1,13 @@
 package ch.zuehlke.f1telemetrytransformer.service.model;
 
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
+@EqualsAndHashCode
 public class LapTimeUpdate {
     private int lapNumber;
     private Double lapTime;

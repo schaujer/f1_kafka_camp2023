@@ -1,11 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {MatTableModule} from "@angular/material/table";
 import {LapsUpdateDTO} from "../../types/lapse-update.type";
 import {RaceTimePipe} from "../../misc/race-time.pipe";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {LapseStreamService} from "../../misc/f1-stream.service";
+import {InitialOverviewService} from "../initial-overview.service";
 
 const drivers = ["Hamilton", "Verstappen", "Leclerc", "Ricciardo", "Alonso", "Vettel", "Bottas", "Sainz", "Perez", "Norris"];
 
@@ -24,10 +25,19 @@ export class OverviewTableComponent implements OnInit, OnDestroy {
   private readonly updateInterval: any;
   // @ts-ignore
   private lapsSubscription: Subscription;
-  constructor(private router: Router, private lapseStreamService: LapseStreamService) {
+
+  constructor(
+      private router: Router,
+      private lapseStreamService: LapseStreamService,
+      private initialOverviewService: InitialOverviewService) {
   }
 
   ngOnInit() {
+    this.initialOverviewService.getInitialOverview()
+        .subscribe(lapData => {
+          this.dataSource = lapData.sort((a, b) => a.position - b.position);
+        });
+
     this.lapsSubscription = this.lapseStreamService.getLapsUpdates().subscribe((data: LapsUpdateDTO | null) => {
       if (data) {
         this.updateLapData(data)

@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/InputGeneration/InputGeneration.iml" filepath="$PROJECT_DIR$/InputGeneration/InputGeneration.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/f1-telemetry-transformer.main.iml" filepath="$PROJECT_DIR$/.idea/modules/f1-telemetry-transformer.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/f1_kafka_camp2023.iml" filepath="$PROJECT_DIR$/.idea/f1_kafka_camp2023.iml" />
+      <module fileurl="file://$PROJECT_DIR$/frontend/frontend.iml" filepath="$PROJECT_DIR$/frontend/frontend.iml" />
     </modules>
   </component>
 </project>

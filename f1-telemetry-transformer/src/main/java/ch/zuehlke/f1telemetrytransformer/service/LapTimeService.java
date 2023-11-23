@@ -31,7 +31,12 @@ public class LapTimeService {
     public LapTimeUpdate handleSectorUpdateMessageEvent(SectorUpdateMessage sectorUpdateMessage) {
         LapTimeUpdate lapTimeUpdate = getLapTimeEntryForDriver(sectorUpdateMessage.getDriver());
 
-        lapTimeUpdate.setLapNumber(sectorUpdateMessage.getLapNumber());
+        if (sectorUpdateMessage.getSector3Time().isNaN()) {
+            lapTimeUpdate.setLapNumber(sectorUpdateMessage.getLapNumber());
+        } else {
+            lapTimeUpdate.setLapNumber(sectorUpdateMessage.getLapNumber() + 1);
+        }
+
         lapTimeUpdate.setSector1Time(sectorUpdateMessage.getSector1Time());
         lapTimeUpdate.setSector2Time(sectorUpdateMessage.getSector2Time());
         lapTimeUpdate.setSector3Time(sectorUpdateMessage.getSector3Time());

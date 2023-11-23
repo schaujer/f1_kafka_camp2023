@@ -23,10 +23,19 @@ export class OverviewTableComponent implements OnInit, OnDestroy {
   changedData = new Map<string, boolean>();
   // @ts-ignore
   private topicSubscription: Subscription;
-  constructor(private router: Router, private lapseStreamService: LapseStreamService) {
+
+  constructor(
+      private router: Router,
+      private lapseStreamService: LapseStreamService,
+      private initialOverviewService: InitialOverviewService) {
   }
 
   ngOnInit() {
+    this.initialOverviewService.getInitialOverview()
+        .subscribe(lapData => {
+          this.dataSource = lapData.sort((a, b) => a.position - b.position);
+        });
+
     this.topicSubscription = this.lapseStreamService.subscribeToTopic('laptimes').subscribe(data => {
       if (data) {
         this.updateLapData(data)

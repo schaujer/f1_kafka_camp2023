@@ -17,4 +17,7 @@ public class TelemetryUpdate {
     private float throttle;
     private boolean brake;
     private boolean drs;
+    private float x;
+    private float y;
+    private float z;
 }

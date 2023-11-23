@@ -25,4 +25,10 @@ public class TelemetryUpdateMessage {
     private boolean brake;
     @JsonProperty("DRS")
     private int drs;
+    @JsonProperty("X")
+    private float x;
+    @JsonProperty("Y")
+    private float y;
+    @JsonProperty("Z")
+    private float z;
 }

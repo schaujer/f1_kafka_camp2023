@@ -36,6 +36,10 @@ public class WebsocketService {
         telemetryUpdate.setSpeed(update.getSpeed());
         telemetryUpdate.setBrake(update.isBrake());
         telemetryUpdate.setThrottle(update.getThrottle());
+        telemetryUpdate.setX(update.getX());
+        telemetryUpdate.setY(update.getY());
+        telemetryUpdate.setZ(update.getZ());
+
         return telemetryUpdate;
     }
 

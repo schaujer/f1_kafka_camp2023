@@ -24,6 +24,9 @@ def setup_telemetry_by_driver(global_start_time: float, session: Session, driver
                      'DRS',
                      'Distance',
                      'RelativeDistance',
+                     'X',
+                     'Y',
+                     'Z',
                      'Timestamp']]
     df = telemetry.sort_values('Timestamp')
     dicted = df.to_dict('records')
